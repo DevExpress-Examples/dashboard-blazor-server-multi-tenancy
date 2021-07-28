@@ -1,0 +1,66 @@
+﻿@page "/"
+
+<style type="text/css">
+    .roleTable td, .roleTable th {
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+
+<h1>Dashboard for Blazor - How to implement multi-tenant Dashboard architecture</h1>
+
+<p>Use the "Register" link above to create and confirm new accounts (admin@gmail.com, user@gmail.com and guest@gmail.com for this example).</p>
+<p>Use the "Log In" link above to select the current user and navigate to the "Web Dashboard" page.</p>
+
+<hr />
+<table class="roleTable">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Dashboard Storage</th>
+            <th>DataSource Storage</th>
+            <th>ConnectionString Provider</th>
+            <th>DBSchema Provider</th>
+            <th>Working Mode</th>
+            <th>Create/Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Admin</td>
+            <td>dashboard1_admin, dashboard2_admin</td>
+            <td>SqlDataSource, JsonDataSource</td>
+            <td>Northwind, CarsXtraScheduling</td>
+            <td>All (Categories, Products, Cars,...)</td>
+            <td>Designer, Viewer</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>dashboard1_user</td>
+            <td>SqlDataSource</td>
+            <td>CarsXtraScheduling</td>
+            <td>Cars</td>
+            <td>Designer, Viewer</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>Guest</td>
+            <td>dashboard1_guest</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>ViewerOnly</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Unauthorized</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>ViewerOnly</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+</table>

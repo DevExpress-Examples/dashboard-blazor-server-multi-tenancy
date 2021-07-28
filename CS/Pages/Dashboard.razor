@@ -1,0 +1,17 @@
+﻿@page "/dashboard"
+@inject AuthenticationStateProvider AuthStateProvider
+
+<DxDashboard Endpoint="api/dashboard" style="width: 100%; height: 800px;" @bind-WorkingMode="@workingMode">
+</DxDashboard>
+
+@code {
+    private WorkingMode workingMode;
+
+    protected override async Task OnInitializedAsync() {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var identityName = authState.User.Identity.Name;
+        var userName = identityName?.Substring(0, identityName.IndexOf("@"));
+        
+        workingMode = (userName == "admin" || userName == "user") ? WorkingMode.Designer : WorkingMode.ViewerOnly;
+    }
+}
