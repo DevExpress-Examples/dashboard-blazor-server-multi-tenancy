@@ -48,7 +48,7 @@ The Web Dashboard control can operate in `ViewerOnly` mode for unauthorized user
 
 ## Example Structure
 
-You can limit access to sensitive information depending on the current user's ID. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. We use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above from the [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class. So, this class is an entry to point for configuring all providers. It is also registered as a *scoped* DI service in the [Startup.cs](./CS/Code/Startup.cs) file.
+You can limit access to sensitive information depending on the current user's ID. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. We use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above from the [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class. So, this class is an entry to point for configuring all providers. It is also registered as a *scoped* DI service in the [Startup.cs](./CS/Startup.cs) file.
 
 When the application starts, you see the [Index](./CS/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
 
