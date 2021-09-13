@@ -3,7 +3,7 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1017576)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
-# Dashboard for Blazor - How to implement multi-tenant Dashboard architecture by using the ASP.NET Core's Identity authentication system
+# Dashboard for Blazor - How to Implement Multi-Tenant Dashboard Architecture using the ASP.NET Core's Identity Authentication System
 
 This example shows how to configure the Dashboard control so that it works in the multi-user environment. 
 
@@ -65,17 +65,17 @@ When the application starts, you see the [Index](./CS/Pages/Index.razor) view wh
 | Unauthorized | - | - | - | - | ViewerOnly | - |
 
 
-## Quick Start
+## How to Launch
 
-This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). So, we use the [ASP.NET Core's Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) mechanism for authentication. For this reason, you will need to perform the following praparation steps to initialize the Identity database and register required user accounts in it:
+This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). The examples uses the [ASP.NET Core's Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) mechanism for authentication. For this reason, you need to follow the preparation steps below to initialize the Identity database and register required user accounts in it:
 
-1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the following command in the Package Manager Console for this purpose:
+1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the Package Manager Console for this purpose:
 
 ```
 PM> Update-Database
 ```
 
-2) Create and confirm the following user accounts by using the `Identity/Account/Register` form:
+2) Create and confirm the following user accounts in the `Identity/Account/Register` form:
 
 ```
 Email: admin@gmail.com
