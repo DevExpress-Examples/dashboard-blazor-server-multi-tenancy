@@ -3,7 +3,7 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1017576)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
-# Dashboard for Blazor - How to implement multi-tenant Dashboard architecture by using the ASP.NET Core's Identity authentication system
+# Dashboard for Blazor - How to Implement Multi-Tenant Dashboard Architecture using the ASP.NET Core's Identity Authentication System
 
 This example shows how to configure the Dashboard control so that it works in the multi-user environment. 
 
@@ -53,7 +53,7 @@ The Web Dashboard control can operate in `ViewerOnly` mode for unauthorized user
 
 ## Example Structure
 
-You can limit access to sensitive information depending on the current user's ID. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. We use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above from the [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class. So, this class is an entry to point for configuring all providers. It is also registered as a *scoped* DI service in the [Startup.cs](./CS/Startup.cs) file.
+You can limit access to sensitive information depending on the current user's ID. The [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class is an entry point for configuring all providers. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. In the `MultiTenantDashboardConfigurator` class, use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above. This class is registered as a *scoped* DI service in the [Startup.cs](./CS/Startup.cs) file.
 
 When the application starts, you see the [Index](./CS/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
 
@@ -65,17 +65,17 @@ When the application starts, you see the [Index](./CS/Pages/Index.razor) view wh
 | Unauthorized | - | - | - | - | ViewerOnly | - |
 
 
-## Quick Start
+## How to Launch
 
-This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). So, we use the [ASP.NET Core's Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) mechanism for authentication. For this reason, you will need to perform the following praparation steps to initialize the Identity database and register required user accounts in it:
+This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). The example uses the [ASP.NET Core's Identity mechanism](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) for authentication. For this reason, you need to follow the steps below to initialize the Identity database and register required user accounts in it:
 
-1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the following command in the Package Manager Console for this purpose:
+1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the Package Manager Console for this purpose:
 
 ```
 PM> Update-Database
 ```
 
-2) Create and confirm the following user accounts by using the `Identity/Account/Register` form:
+2) Create and confirm the following user accounts in the `Identity/Account/Register` form:
 
 ```
 Email: admin@gmail.com
@@ -102,5 +102,5 @@ Use the **Register** link in the application header section for this purpose.
 - [Dashboard for ASP.NET Core - How to load different data based on the current user](https://github.com/DevExpress-Examples/DashboardDifferentUserDataAspNetCore)
 - [Dashboard for ASP.NET Core - How to implement authentication](https://github.com/DevExpress-Examples/ASPNET-Core-Dashboard-Authentication)
 - [Dashboard for MVC - How to implement multi-tenant Dashboard architecture](https://github.com/DevExpress-Examples/DashboardUserBasedMVC)
-- [Dashboardfor MVC - How to load and save dashboards from/to a database](https://github.com/DevExpress-Examples/mvc-dashboard-how-to-load-and-save-dashboards-from-to-a-database-t400693)
-- [Dashboardfor MVC - How to load different data based on the current user](https://github.com/DevExpress-Examples/DashboardDifferentUserDataMVC)
+- [Dashboard for MVC - How to load and save dashboards from/to a database](https://github.com/DevExpress-Examples/mvc-dashboard-how-to-load-and-save-dashboards-from-to-a-database-t400693)
+- [Dashboard for MVC - How to load different data based on the current user](https://github.com/DevExpress-Examples/DashboardDifferentUserDataMVC)
