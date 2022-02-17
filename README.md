@@ -5,7 +5,7 @@
 <!-- default badges end -->
 # Dashboard for Blazor - How to Implement Multi-Tenant Dashboard Architecture using the ASP.NET Core's Identity Authentication System
 
-This example shows how to configure the Dashboard control so that it works in the multi-user environment. 
+This example shows how to configure the Dashboard component for Blazor so that it works in the multi-user environment. 
 
 You can identify a user in the ASP.NET Core's `HttpContext.User` and return the following user-specific content:
 
