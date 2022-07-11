@@ -7,7 +7,52 @@
 
 This example shows how to configure the Dashboard component for Blazor so that it works in the multi-user environment. 
 
-You can identify a user in the ASP.NET Core's `HttpContext.User` and return the following user-specific content:
+You can identify a user in the ASP.NET Core's `HttpContext.User` and return the user-specific content.
+
+![](web-dashboard-blazor-auth.png)
+
+## How to Launch
+
+This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). The example uses the [ASP.NET Core's Identity mechanism](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) for authentication. For this reason, you need to follow the steps below to initialize the Identity database and register required user accounts in it:
+
+1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the Package Manager Console for this purpose:
+
+   ```
+   PM> Update-Database
+   ```
+
+2) In this example, the following user accounts were authorized:
+
+   ```
+   Email: admin@gmail.com
+   Password: 1*234aB
+
+   Email: user@gmail.com
+   Password: 1*234aC
+
+   Email: guest@gmail.com
+   Password: 1*234aD
+   ```
+
+If the current accounts do not exist, go to the **Register** page (`Identity/Account/Register`) to create and confirm these user accounts.
+
+## Example Overview
+
+You can limit access to sensitive information depending on the current user's ID. The [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class is an entry point for configuring all providers. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. In the `MultiTenantDashboardConfigurator` class, use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above. This class is registered as a *scoped* DI service in the [Startup.cs](./CS/Startup.cs) file.
+
+When the application starts, you see the [Index](./CS/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
+
+| Role  | Dashboard Storage | DataSource Storage | ConnectionString Provider | DBSchema Provider | Working Mode | Create/Edit |
+| --- | --- | --- | --- | --- | --- | --- |
+| Admin | dashboard1_admin, dashboard2_admin | SqlDataSource, JsonDataSource | Northwind, CarsXtraScheduling | All (Categories, Products, Cars,...) | Designer, Viewer | Yes |
+| User | dashboard1_user | SqlDataSource | CarsXtraScheduling | Cars | Designer, Viewer | No |
+| Guest | dashboard1_guest | - | - | - | ViewerOnly | - |
+| Unauthorized | - | - | - | - | ViewerOnly | - |
+
+
+## Example Details
+
+You can return the following user-specific content:
 
 ### Dashboards
 
@@ -41,7 +86,6 @@ A custom connection string provider allows you to specify connection strings dep
 
 **Files to look at**: [CustomConnectionStringProvider.cs](./CS/Code/CustomConnectionStringProvider.cs)
 
-
 ### Working Mode
 
 The Web Dashboard control can operate in `ViewerOnly` mode for unauthorized users. To do this, handle the [DashboardConfigurator.VerifyClientTrustLevel](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWeb.DashboardConfigurator.VerifyClientTrustLevel) event and set the `e.ClientTrustLevel` property to `Restricted`. This setting prevents inadvertent or unauthorized modifications of dashboards stored on a server. You can find more information in the following help section: [Security Considerations - Working Mode Access Rights](https://docs.devexpress.com/Dashboard/118651/web-dashboard/general-information/security-considerations#working-mode-access-rights).
@@ -49,46 +93,6 @@ The Web Dashboard control can operate in `ViewerOnly` mode for unauthorized user
 **API**: [DashboardConfigurator.VerifyClientTrustLevel Event](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWeb.DashboardConfigurator.VerifyClientTrustLevel)
 
 **Files to look at**: [Dashboard.razor](./CS/Pages/Dashboard.razor) and [MultiTenantDashboardConfigurator.cs](./CS/Code/MultiTenantDashboardConfigurator.cs)
-
-
-## Example Structure
-
-You can limit access to sensitive information depending on the current user's ID. The [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class is an entry point for configuring all providers. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. In the `MultiTenantDashboardConfigurator` class, use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above. This class is registered as a *scoped* DI service in the [Startup.cs](./CS/Startup.cs) file.
-
-When the application starts, you see the [Index](./CS/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
-
-| Role  | Dashboard Storage | DataSource Storage | ConnectionString Provider | DBSchema Provider | Working Mode | Create/Edit |
-| --- | --- | --- | --- | --- | --- | --- |
-| Admin | dashboard1_admin, dashboard2_admin | SqlDataSource, JsonDataSource | Northwind, CarsXtraScheduling | All (Categories, Products, Cars,...) | Designer, Viewer | Yes |
-| User | dashboard1_user | SqlDataSource | CarsXtraScheduling | Cars | Designer, Viewer | No |
-| Guest | dashboard1_guest | - | - | - | ViewerOnly | - |
-| Unauthorized | - | - | - | - | ViewerOnly | - |
-
-
-## How to Launch
-
-This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). The example uses the [ASP.NET Core's Identity mechanism](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) for authentication. For this reason, you need to follow the steps below to initialize the Identity database and register required user accounts in it:
-
-1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the Package Manager Console for this purpose:
-
-```
-PM> Update-Database
-```
-
-2) Create and confirm the following user accounts in the `Identity/Account/Register` form:
-
-```
-Email: admin@gmail.com
-Password: 1*234aB
-
-Email: user@gmail.com
-Password: 1*234aC
-
-Email: guest@gmail.com
-Password: 1*234aD
-```
-
-Use the **Register** link in the application header section for this purpose.
 
 ## Documentation
 
