@@ -38,9 +38,9 @@ If the current accounts do not exist, go to the **Register** page (`Identity/Acc
 
 ## Example Overview
 
-You can limit access to sensitive information depending on the current user's ID. The [MultiTenantDashboardConfigurator](./CS/Code/MultiTenantDashboardConfigurator.cs) class is an entry point for configuring all providers. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. In the `MultiTenantDashboardConfigurator` class, use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context?view=aspnetcore-3.0) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above. This class is registered as a *scoped* DI service in the [Startup.cs](./CS/Startup.cs) file.
+You can limit access to sensitive information depending on the current user's ID. The [MultiTenantDashboardConfigurator](./CS/BlazorAuth/Code/MultiTenantDashboardConfigurator.cs) class is an entry point for configuring all providers. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. In the `MultiTenantDashboardConfigurator` class, use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above. This class is registered as a *scoped* DI service in the [Program.cs](./CS/BlazorAuth/Program.cs) file.
 
-When the application starts, you see the [Index](./CS/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
+When the application starts, you see the [Index](./CS/BlazorAuth/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
 
 | Role  | Dashboard Storage | DataSource Storage | ConnectionString Provider | DBSchema Provider | Working Mode | Create/Edit |
 | --- | --- | --- | --- | --- | --- | --- |
