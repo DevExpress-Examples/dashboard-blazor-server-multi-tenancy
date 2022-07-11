@@ -1,0 +1,77 @@
+﻿@page "/"
+
+<style type="text/css">
+    .roleTable td, .roleTable th {
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+
+<h1>Multi-tenant Dashboard for Blazor</h1>
+
+<p><a href="Identity/Account/Login">Log in</a> as one of the user below and navigate to the <a href="dashboard">Web Dashboard</a> page to see the result:</p>
+
+<code>
+<p>Email: admin@gmail.com<br />Password: 1*234aB</p>
+
+<p>Email: user@gmail.com<br />Password: 1*234aC</p>
+
+<p>Email: guest@gmail.com<br />Password: 1*234aD</p>
+</code>
+<p>If the current accounts do not exist, go to the <a href="Identity/Account/Register">Register</a> page to create and confirm these user accounts.</p>
+
+<hr />
+
+<p>The following roles are supported:</p>
+
+<table class="roleTable">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Dashboard Storage</th>
+            <th>DataSource Storage</th>
+            <th>ConnectionString Provider</th>
+            <th>DBSchema Provider</th>
+            <th>Working Mode</th>
+            <th>Create/Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Admin</td>
+            <td>dashboard1_admin, dashboard2_admin</td>
+            <td>SqlDataSource, JsonDataSource</td>
+            <td>Northwind, CarsXtraScheduling</td>
+            <td>All (Categories, Products, Cars,...)</td>
+            <td>Designer, Viewer</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>dashboard1_user</td>
+            <td>SqlDataSource</td>
+            <td>CarsXtraScheduling</td>
+            <td>Cars</td>
+            <td>Designer, Viewer</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>Guest</td>
+            <td>dashboard1_guest</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>ViewerOnly</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Unauthorized</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>ViewerOnly</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+</table>
