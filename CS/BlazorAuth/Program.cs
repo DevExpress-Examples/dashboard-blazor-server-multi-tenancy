@@ -47,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseDevExpressControls();
 app.UseRouting();
-EndpointRouteBuilderExtension.MapDashboardRoute(app, "api/dashboard", "DefaultDashboard");
+app.MapDashboardRoute("api/dashboard", "DefaultDashboard");
 
 app.UseAuthentication();
 app.UseAuthorization();
