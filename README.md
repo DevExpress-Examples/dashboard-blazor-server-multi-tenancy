@@ -60,7 +60,7 @@ Custom dashboard storage allows you to specify which dashboards the user can acc
 
 **API**: [IEditableDashboardStorage Interface](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWeb.IEditableDashboardStorage) 
 
-**Files to look at**: [CustomDashboardStorage.cs](./CS/BlazorAuth/Code/CustomDashboardStorage.cs)
+**Files to review**: [CustomDashboardStorage.cs](./CS/BlazorAuth/Code/CustomDashboardStorage.cs)
 
 ### Data Sources
 
@@ -68,7 +68,7 @@ Custom data source storage allows you to specify which data sources are availabl
 
 **API**: [IDataSourceStorage Interface](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWeb.IDataSourceStorage) 
 
-**Files to look at**: [CustomDataSourceStorage.cs](./CS/BlazorAuth/Code/CustomDataSourceStorage.cs)
+**Files to review**: [CustomDataSourceStorage.cs](./CS/BlazorAuth/Code/CustomDataSourceStorage.cs)
 
 ### Data Source Schema
 
@@ -76,7 +76,7 @@ A custom data source schema provider allows you to filter the data source for di
 
 **API**: [DBSchemaProviderEx Class](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Sql.DBSchemaProviderEx)
 
-**Files to look at**: [CustomDBSchemaProvider.cs](./CS/BlazorAuth/Code/CustomDBSchemaProvider.cs)
+**Files to review**: [CustomDBSchemaProvider.cs](./CS/BlazorAuth/Code/CustomDBSchemaProvider.cs)
 
 ### Connection Strings
 
@@ -84,7 +84,7 @@ A custom connection string provider allows you to specify connection strings dep
 
 **API**: [IDataSourceWizardConnectionStringsProvider Interface](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Web.IDataSourceWizardConnectionStringsProvider) 
 
-**Files to look at**: [CustomConnectionStringProvider.cs](./CS/BlazorAuth/Code/CustomConnectionStringProvider.cs)
+**Files to review**: [CustomConnectionStringProvider.cs](./CS/BlazorAuth/Code/CustomConnectionStringProvider.cs)
 
 ### Working Mode
 
@@ -92,7 +92,7 @@ The Web Dashboard control can operate in `ViewerOnly` mode for unauthorized user
 
 **API**: [DashboardConfigurator.VerifyClientTrustLevel Event](https://docs.devexpress.com/Dashboard/DevExpress.DashboardWeb.DashboardConfigurator.VerifyClientTrustLevel)
 
-**Files to look at**: [Dashboard.razor](./CS/BlazorAuth/Pages/Dashboard.razor) and [MultiTenantDashboardConfigurator.cs](./CS/BlazorAuth/Code/MultiTenantDashboardConfigurator.cs)
+**Files to review**: [Dashboard.razor](./CS/BlazorAuth/Pages/Dashboard.razor) and [MultiTenantDashboardConfigurator.cs](./CS/BlazorAuth/Code/MultiTenantDashboardConfigurator.cs)
 
 ## Documentation
 
