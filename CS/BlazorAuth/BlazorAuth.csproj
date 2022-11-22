@@ -9,8 +9,8 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="DevExpress.AspNetCore.Dashboard" Version="22.1.3" />
-		<PackageReference Include="DevExpress.Blazor.Dashboard" Version="22.1.3" />
+		<PackageReference Include="DevExpress.AspNetCore.Dashboard" Version="22.2.*" />
+		<PackageReference Include="DevExpress.Blazor.Dashboard" Version="22.2.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
