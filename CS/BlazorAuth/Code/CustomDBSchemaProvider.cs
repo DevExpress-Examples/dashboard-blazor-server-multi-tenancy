@@ -1,18 +1,18 @@
 ﻿using DevExpress.DataAccess.Sql;
 using DevExpress.Xpo.DB;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BlazorAuth {
     public class CustomDBSchemaProvider : DBSchemaProviderEx {
-        private string userName;
+        private readonly AuthenticationStateProvider authenticationStateProvider;
 
-        public CustomDBSchemaProvider(string userName) : base() {
-            this.userName = userName;
+        public CustomDBSchemaProvider(AuthenticationStateProvider authenticationStateProvider) : base() {
+            this.authenticationStateProvider = authenticationStateProvider;
         }
 
         public override DBTable[] GetTables(SqlDataConnection connection, params string[] tableList) {
             var result = base.GetTables(connection, tableList);
+            var userName = AuthHelper.GetUserName(authenticationStateProvider);
 
             if (userName == "admin") {
                 return result;

@@ -1,19 +1,14 @@
 ﻿@page "/dashboard"
 @inject AuthenticationStateProvider AuthStateProvider
 
-<DxDashboard Endpoint="api/dashboard" style="width: 100%; height: 800px;" @bind-WorkingMode="@workingMode">
-</DxDashboard>
+<DxDashboard style="width: 100%; height: 800px;" @bind-WorkingMode="@workingMode" />
 
 @code {
     private WorkingMode workingMode;
 
     protected override async Task OnInitializedAsync() {
-        AuthenticationState authState = await AuthStateProvider.GetAuthenticationStateAsync();
-        if (authState.User.Identity is not null) {
-            var identityName = authState.User.Identity.Name;
-            var userName = identityName?.Substring(0, identityName.IndexOf("@"));
+        var userName = AuthHelper.GetUserName(AuthStateProvider);
 
-            workingMode = (userName == "admin" || userName == "user") ? WorkingMode.Designer : WorkingMode.ViewerOnly;
-        }
+        workingMode = (userName == "admin" || userName == "user") ? WorkingMode.Designer : WorkingMode.ViewerOnly;
     }
 }

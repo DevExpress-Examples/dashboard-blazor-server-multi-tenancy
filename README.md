@@ -8,7 +8,7 @@
 
 This example shows how to configure the Dashboard component for Blazor so that it works in the multi-user environment. 
 
-You can identify a user in the ASP.NET Core's `HttpContext.User` and return the user-specific content.
+The example uses ASP.NET Core Identity for authentication and Blazor's `AuthenticationStateProvider` to identify the current user. It configures dashboard storage, data sources, connection strings, and schema access based on that user's identity.
 
 ![](web-dashboard-blazor-auth.png)
 
@@ -16,7 +16,7 @@ You can identify a user in the ASP.NET Core's `HttpContext.User` and return the 
 
 This example was created based on the **Blazor Server App** Visual Studio template with the *Authentication Type = 'Individual Accounts'* setting (see [Secure ASP.NET Core Blazor Server apps](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-5.0&tabs=visual-studio)). The example uses the [ASP.NET Core's Identity mechanism](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio) for authentication. For this reason, you need to follow the steps below to initialize the Identity database and register required user accounts in it:
 
-1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-9F8F37E8-C7E8-4D29-BFE6-47204A65FA44` database. You can run the following command in the Package Manager Console for this purpose:
+1) Apply the `00000000000000_CreateIdentitySchema` migration to the `aspnet-BlazorAuth-...` database. You can run the following command in the Package Manager Console for this purpose:
 
    ```
    PM> Update-Database
@@ -39,7 +39,9 @@ If the current accounts do not exist, go to the **Register** page (`Identity/Acc
 
 ## Example Overview
 
-You can limit access to sensitive information depending on the current user's ID. The [MultiTenantDashboardConfigurator](./CS/BlazorAuth/Code/MultiTenantDashboardConfigurator.cs) class is an entry point for configuring all providers. Every custom store/provider reads the `IHttpContextAccessor.HttpContext.User.Identity`. In the `MultiTenantDashboardConfigurator` class, use the standard [IHttpContextAccessor](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-context) with dependency injection to access the HTTP context and pass the retrieved user name to Dashboard providers listed above. This class is registered as a *scoped* DI service in the [Program.cs](./CS/BlazorAuth/Program.cs) file.
+The [MultiTenantDashboardConfigurator](./CS/BlazorAuth/Code/MultiTenantDashboardConfigurator.cs) class configures user-specific dashboard storage and data providers. It is registered as a scoped DI service in [Program.cs](./CS/BlazorAuth/Program.cs).
+
+In [Dashboard.razor](./CS/BlazorAuth/Pages/Dashboard.razor), the component's `OnInitializedAsync` method retrieves the current authentication state and configures the working mode based on the user name. The configurator and each custom store/provider extracts the user name through DI.
 
 When the application starts, you see the [Index](./CS/BlazorAuth/Pages/Index.razor) view where you can select a user. Use the **Log in** link for this purpose. Below is a table that illustrates the user IDs and their associated rights in this example:
 

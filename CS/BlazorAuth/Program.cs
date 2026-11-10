@@ -2,7 +2,7 @@ using BlazorAuth;
 using BlazorAuth.Areas.Identity;
 using BlazorAuth.Data;
 using DevExpress.AspNetCore;
-using DevExpress.DashboardAspNetCore;
+using DevExpress.DashboardBlazor;
 using DevExpress.DashboardWeb;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,20 +16,23 @@ IConfiguration configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddDevExpressControls();
 builder.Services.AddRazorPages();
 
-builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddScoped<CustomConnectionStringProvider>();
+builder.Services.AddScoped<CustomDataSourceStorage>();
+builder.Services.AddScoped<CustomDashboardStorage>();
+builder.Services.AddScoped<CustomDBSchemaProvider>();
 builder.Services.AddScoped<DashboardConfigurator, MultiTenantDashboardConfigurator>();
 
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddDevExpressBlazorDashboard();
 
 var app = builder.Build();
 
@@ -47,12 +50,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseDevExpressControls();
 app.UseRouting();
-app.MapDashboardRoute("api/dashboard", "DefaultDashboard");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

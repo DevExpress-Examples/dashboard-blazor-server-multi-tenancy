@@ -4,11 +4,95 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-BlazorAuth-FEB431D8-D991-4F8A-923F-40225A99A530</UserSecretsId>
   </PropertyGroup>
+
+
+	<ItemGroup>
+		<Reference Include="DevExpress.Blazor.Resources.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Blazor.Resources.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Dashboard.v26.2.Blazor">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Dashboard.v26.2.Blazor.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.AspNetCore.Common.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.AspNetCore.Common.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.AspNetCore.Core.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.AspNetCore.Core.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Web.Resources.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Web.Resources.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Charts.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Charts.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Dashboard.v26.2.AspNetCore">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Dashboard.v26.2.AspNetCore.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Dashboard.v26.2.Web">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Dashboard.v26.2.Web.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Dashboard.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Dashboard.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Data.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Data.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.DataAccess.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.DataAccess.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.CodeParser.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.CodeParser.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Map.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Map.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Office.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Office.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Drawing.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Drawing.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.PivotGrid.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.PivotGrid.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Pdf.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Pdf.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Printing.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Printing.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.RichEdit.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.RichEdit.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Xpo.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Xpo.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.XtraReports.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.XtraReports.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.XtraCharts.v26.2">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.XtraCharts.v26.2.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.XtraGauges.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.XtraGauges.v26.2.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="DevExpress.Sparkline.v26.2.Core">
+			<HintPath>C:\Work\dxvcs\Bin\NETCore\DevExpress.Sparkline.v26.2.Core.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="LinkCodeContent" Condition="!Exists('wwwroot/_content/')" BeforeTargets="Build">
+		<Exec Command="mkdir &quot;wwwroot/_content&quot;" />
+		<Exec Command="mklink /J &quot;wwwroot/_content/DevExpress.Blazor.Dashboard&quot; &quot;C:\Work\dxvcs\ASP\DevExpress.Dashboard.Web\DevExpress.Dashboard.Blazor\wwwroot&quot;" />
+		<Exec Command="mklink /J &quot;wwwroot/_content/DevExpress.Blazor.Resources&quot; &quot;C:\Work\dxvcs\Blazor\DevExpress.Blazor.Resources\wwwroot&quot;" />
+	</Target>
+	
+	
+	
   <ItemGroup>
-    <PackageReference Include="DevExpress.AspNetCore.Dashboard" Version="26.1.5" />
-    <PackageReference Include="DevExpress.Blazor.Dashboard" Version="26.1.5" />
+    <!--<PackageReference Include="DevExpress.AspNetCore.Dashboard" Version="26.1.4" />
+    <PackageReference Include="DevExpress.Blazor.Dashboard" Version="26.1.4" />-->
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.10" />
@@ -17,5 +101,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.10" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.21" />
   </ItemGroup>
 </Project>

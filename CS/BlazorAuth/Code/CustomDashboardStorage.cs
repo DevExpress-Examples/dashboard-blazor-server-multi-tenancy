@@ -1,21 +1,19 @@
 ﻿using DevExpress.DashboardWeb;
-using Microsoft.AspNetCore.Hosting;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Xml.Linq;
 
 namespace BlazorAuth {
     public class CustomDashboardStorage : IEditableDashboardStorage {
-        private string userName;
+        private readonly AuthenticationStateProvider authenticationStateProvider;
         private string dashboardStorageFolder;
 
-        public CustomDashboardStorage(IWebHostEnvironment hostingEnvironment, string userName) {
-            this.userName = userName;
+        public CustomDashboardStorage(IWebHostEnvironment hostingEnvironment, AuthenticationStateProvider authenticationStateProvider) {
+            this.authenticationStateProvider = authenticationStateProvider;
             this.dashboardStorageFolder = hostingEnvironment.ContentRootFileProvider.GetFileInfo("App_Data/Dashboards").PhysicalPath;
         }
 
         public IEnumerable<DashboardInfo> GetAvailableDashboardsInfo() {
+            var userName = AuthHelper.GetUserName(authenticationStateProvider);
             var dashboardInfos = new List<DashboardInfo>();
 
             var files = Directory.GetFiles(dashboardStorageFolder, "*.xml");
@@ -41,6 +39,8 @@ namespace BlazorAuth {
         }
 
         public string AddDashboard(XDocument dashboard, string dashboardName) {
+            var userName = AuthHelper.GetUserName(authenticationStateProvider);
+            
             if (string.IsNullOrEmpty(userName) || userName != "admin")
                 throw new System.ApplicationException("You are not authorized to add dashboards.");
 
@@ -52,6 +52,8 @@ namespace BlazorAuth {
         }
 
         public void SaveDashboard(string dashboardID, XDocument dashboard) {
+            var userName = AuthHelper.GetUserName(authenticationStateProvider);
+            
             if (string.IsNullOrEmpty(userName) || userName != "admin")
                 throw new System.ApplicationException("You are not authorized to save dashboards.");
 

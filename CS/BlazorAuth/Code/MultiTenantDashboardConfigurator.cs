@@ -1,23 +1,26 @@
 ﻿using DevExpress.DashboardWeb;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BlazorAuth {
     public class MultiTenantDashboardConfigurator : DashboardConfigurator {
-        private string? userName;
+        public MultiTenantDashboardConfigurator(
+            AuthenticationStateProvider authenticationStateProvider,
+            CustomConnectionStringProvider connectionStrings,
+            CustomDataSourceStorage dataSources,
+            CustomDashboardStorage dashboards,
+            CustomDBSchemaProvider schema) {
 
-        public MultiTenantDashboardConfigurator(IWebHostEnvironment hostingEnvironment, IHttpContextAccessor contextAccessor) {
-            string? identityName = contextAccessor.HttpContext?.User.Identity?.Name;
-            userName = identityName?.Substring(0, identityName.IndexOf("@"));
+            SetConnectionStringsProvider(connectionStrings);
+            SetDataSourceStorage(dataSources);
+            SetDashboardStorage(dashboards);
+            SetDBSchemaProvider(schema);
 
-            SetConnectionStringsProvider(new CustomConnectionStringProvider(userName));
-            SetDataSourceStorage(new CustomDataSourceStorage(userName));
-            SetDashboardStorage(new CustomDashboardStorage(hostingEnvironment, userName));
-            SetDBSchemaProvider(new CustomDBSchemaProvider(userName));
+            VerifyClientTrustLevel += (s, e) => {
+                var userName = AuthHelper.GetUserName(authenticationStateProvider);
 
-            VerifyClientTrustLevel += MultiTenantDashboardConfigurator_VerifyClientTrustLevel;            
-        }
-        private void MultiTenantDashboardConfigurator_VerifyClientTrustLevel(object sender, VerifyClientTrustLevelEventArgs e) {
-            if (string.IsNullOrEmpty(userName) || userName == "guest")
-                e.ClientTrustLevel = ClientTrustLevel.Restricted;
+                if (string.IsNullOrEmpty(userName) || userName == "guest")
+                    e.ClientTrustLevel = ClientTrustLevel.Restricted;
+            };
         }
     }
 }

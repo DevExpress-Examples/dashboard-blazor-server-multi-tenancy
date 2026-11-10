@@ -2,21 +2,20 @@
 using DevExpress.DashboardWeb;
 using DevExpress.DataAccess.Json;
 using DevExpress.DataAccess.Sql;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Xml.Linq;
 
 namespace BlazorAuth {
     public class CustomDataSourceStorage : IDataSourceStorage {
-        private string userName;
+        private readonly AuthenticationStateProvider authenticationStateProvider;
         private Dictionary<string, XDocument> documents = new Dictionary<string, XDocument>();
 
         private const string sqlDataSourceId1 = "SQL Data Source (Northwind)";
         private const string sqlDataSourceId2 = "SQL Data Source (CarsXtraScheduling)";
         private const string jsonDataSourceId = "JSON Data Source";
 
-        public CustomDataSourceStorage(string userName) {
-            this.userName = userName;
+        public CustomDataSourceStorage(AuthenticationStateProvider authenticationStateProvider) {
+            this.authenticationStateProvider = authenticationStateProvider;
 
             DashboardSqlDataSource sqlDataSource1 = new DashboardSqlDataSource(sqlDataSourceId1, "NorthwindConnectionString");
             SelectQuery query1 = SelectQueryFluentBuilder
@@ -55,6 +54,8 @@ namespace BlazorAuth {
         }
 
         public IEnumerable<string> GetDataSourcesID() {
+            var userName = AuthHelper.GetUserName(authenticationStateProvider);
+            
             if (userName == "admin") {
                 return documents.Keys;
             } else if (userName == "user") {
