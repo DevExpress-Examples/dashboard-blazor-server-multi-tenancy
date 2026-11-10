@@ -1,21 +1,19 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Web;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Collections.Generic;
 
 namespace BlazorAuth {
     public class CustomConnectionStringProvider : IDataSourceWizardConnectionStringsProvider {
-        private readonly AuthenticationStateProvider authenticationStateProvider;
-        private Dictionary<string, string> connectionStrings = new Dictionary<string, string>();
+        readonly IDashboardUserProvider dashboardUserProvider;
+        readonly Dictionary<string, string> connectionStrings = new Dictionary<string, string>();
 
-        public CustomConnectionStringProvider(AuthenticationStateProvider authenticationStateProvider) {
-            this.authenticationStateProvider = authenticationStateProvider;
+        public CustomConnectionStringProvider(IDashboardUserProvider dashboardUserProvider) {
+            this.dashboardUserProvider = dashboardUserProvider;
             connectionStrings.Add("NorthwindConnectionString", @"XpoProvider=SQLite; Data Source=App_Data/nwind.db;");
             connectionStrings.Add("CarsXtraSchedulingConnectionString", @"XpoProvider=SQLite;Data Source=App_Data/CarsDB.db;");
         }
 
         public Dictionary<string, string> GetConnectionDescriptions() {
-            var userName = AuthHelper.GetUserName(authenticationStateProvider);
+            var userName = dashboardUserProvider.GetUserName();
             var connections = new Dictionary<string, string>();
 
             if (userName == "admin") {

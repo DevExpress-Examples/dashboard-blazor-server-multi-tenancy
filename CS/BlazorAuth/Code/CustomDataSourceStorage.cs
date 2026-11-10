@@ -1,21 +1,20 @@
-﻿using DevExpress.DashboardCommon;
+﻿using System.Xml.Linq;
+using DevExpress.DashboardCommon;
 using DevExpress.DashboardWeb;
 using DevExpress.DataAccess.Json;
 using DevExpress.DataAccess.Sql;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Xml.Linq;
 
 namespace BlazorAuth {
     public class CustomDataSourceStorage : IDataSourceStorage {
-        private readonly AuthenticationStateProvider authenticationStateProvider;
-        private Dictionary<string, XDocument> documents = new Dictionary<string, XDocument>();
+        readonly IDashboardUserProvider dashboardUserProvider;
+        readonly Dictionary<string, XDocument> documents = new Dictionary<string, XDocument>();
 
-        private const string sqlDataSourceId1 = "SQL Data Source (Northwind)";
-        private const string sqlDataSourceId2 = "SQL Data Source (CarsXtraScheduling)";
-        private const string jsonDataSourceId = "JSON Data Source";
+        const string sqlDataSourceId1 = "SQL Data Source (Northwind)";
+        const string sqlDataSourceId2 = "SQL Data Source (CarsXtraScheduling)";
+        const string jsonDataSourceId = "JSON Data Source";
 
-        public CustomDataSourceStorage(AuthenticationStateProvider authenticationStateProvider) {
-            this.authenticationStateProvider = authenticationStateProvider;
+        public CustomDataSourceStorage(IDashboardUserProvider dashboardUserProvider) {
+            this.dashboardUserProvider = dashboardUserProvider;
 
             DashboardSqlDataSource sqlDataSource1 = new DashboardSqlDataSource(sqlDataSourceId1, "NorthwindConnectionString");
             SelectQuery query1 = SelectQueryFluentBuilder
@@ -46,7 +45,7 @@ namespace BlazorAuth {
         }
 
         public XDocument GetDataSource(string dataSourceID) {
-            if (GetDataSourcesID().Contains(dataSourceID)) {
+            if(GetDataSourcesID().Contains(dataSourceID)) {
                 return documents[dataSourceID];
             } else {
                 throw new System.ApplicationException("You are not authorized to use this datasource.");
@@ -54,14 +53,14 @@ namespace BlazorAuth {
         }
 
         public IEnumerable<string> GetDataSourcesID() {
-            var userName = AuthHelper.GetUserName(authenticationStateProvider);
-            
-            if (userName == "admin") {
+            var userName = dashboardUserProvider.GetUserName();
+
+            if(userName == "admin") {
                 return documents.Keys;
-            } else if (userName == "user") {
-                return new string[] { sqlDataSourceId2 };
+            } else if(userName == "user") {
+                return [sqlDataSourceId2];
             } else {
-                return new string[0];
+                return [];
             }
         }
     }

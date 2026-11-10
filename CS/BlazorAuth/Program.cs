@@ -4,6 +4,8 @@ using BlazorAuth.Data;
 using DevExpress.AspNetCore;
 using DevExpress.DashboardBlazor;
 using DevExpress.DashboardWeb;
+using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +24,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddDevExpressControls();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<CustomConnectionStringProvider>();
-builder.Services.AddScoped<CustomDataSourceStorage>();
-builder.Services.AddScoped<CustomDashboardStorage>();
-builder.Services.AddScoped<CustomDBSchemaProvider>();
+builder.Services.AddScoped<IDataSourceWizardConnectionStringsProvider, CustomConnectionStringProvider>();
+builder.Services.AddScoped<IDataSourceStorage, CustomDataSourceStorage>();
+builder.Services.AddScoped<IEditableDashboardStorage, CustomDashboardStorage>();
+builder.Services.AddScoped<IDBSchemaProviderEx, CustomDBSchemaProvider>();
+builder.Services.AddScoped<IDashboardUserProvider, DashboardUserProvider>();
 builder.Services.AddScoped<DashboardConfigurator, MultiTenantDashboardConfigurator>();
 
 builder.Services.AddServerSideBlazor();

@@ -1,22 +1,23 @@
 ﻿using DevExpress.DashboardWeb;
-using Microsoft.AspNetCore.Components.Authorization;
+using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.Web;
 
 namespace BlazorAuth {
     public class MultiTenantDashboardConfigurator : DashboardConfigurator {
         public MultiTenantDashboardConfigurator(
-            AuthenticationStateProvider authenticationStateProvider,
-            CustomConnectionStringProvider connectionStrings,
-            CustomDataSourceStorage dataSources,
-            CustomDashboardStorage dashboards,
-            CustomDBSchemaProvider schema) {
+            IDashboardUserProvider dashboardUserProvider,
+            IDataSourceWizardConnectionStringsProvider connectionStringsProvider,
+            IDataSourceStorage dataSourceStorage,
+            IEditableDashboardStorage dashboardStorage,
+            IDBSchemaProviderEx dbSchemaProvider) {
 
-            SetConnectionStringsProvider(connectionStrings);
-            SetDataSourceStorage(dataSources);
-            SetDashboardStorage(dashboards);
-            SetDBSchemaProvider(schema);
+            SetConnectionStringsProvider(connectionStringsProvider);
+            SetDataSourceStorage(dataSourceStorage);
+            SetDashboardStorage(dashboardStorage);
+            SetDBSchemaProvider(dbSchemaProvider);
 
             VerifyClientTrustLevel += (s, e) => {
-                var userName = AuthHelper.GetUserName(authenticationStateProvider);
+                var userName = dashboardUserProvider.GetUserName();
 
                 if (string.IsNullOrEmpty(userName) || userName == "guest")
                     e.ClientTrustLevel = ClientTrustLevel.Restricted;
